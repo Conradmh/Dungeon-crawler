@@ -1,7 +1,11 @@
 const userSchema = new Schema ({
-  user: String,
+  name: String,
   password: String,
-  email: String
+  email: String,
+  // currentGames: [objectId refs gameSchema]
+  // characters: [ObjectId refs characterSchema]
+  // dungeons: [objectId refs dungeonSchema]
+  // monsters: [objectId refs monsterSchema]
 })
 
 const characterSchema = new Schema ({
@@ -38,6 +42,7 @@ const dungeonSchema = new Schema ({
 })
 
 const gameSchema = new Schema ({
+  // player: [objectid ref users]
   charArray: Array,
   dungeon: [objectid ref dungeon],
   dungeonProgress:[(current values of dungeon.Schema), (current values of character.Schema )]

@@ -1,21 +1,20 @@
 URL                     VERB         Action        Description
-/home                   GET          Index          Show main page
+/game                   POST         Create         Start new game
+/game/:userid           GET          Show           Get game(s) including current user
+/game/:id               PATCH        Update         Save instance of current game
 /dungeon                GET          Index          Show main game page (show available dungeons)
-
-/dungeon/new            Get          New            Show create game form/modal/page
-/dungeon/:id            POST         Create         Create new game
-/dungeon/:id            GET          Show           Show current game page
-/dungeon/:id            PATCH        Update         Save instance of current dungeon
-/monster/new            Get          New            Show create monster list/form/modal
-/monster/:id            GET          Show           Show current monster 
-
+/dungeon                POST         Create         Create new dungeon
+/dungeon/:id            PATCH        Update        Edit dungeon
+/dungeon/:id            Delete       Destroy       Remove Dungeon from DB
+/dungeon                GET          Show           Get dungeons info
+/monster                POST         Create         Create new monster
+/monster/:id            GET          Show           Show current monster
+/monster/:id            PATCH        Update        Edit monster
+/monster/:id            Delete       Destroy       Remove Monster from DB
+/character              GET          Show          Show all characters
 
 /user/login             POST          Login         log into game
-/user/logout            GET           Logout        logout of game, reload login
-/user/register          POST          Register      create user,log into game
-/admin/login            POST          Login         log into game
-/admin/logout           GET           Logout        logout of game, reload login
-/admin/register         POST          Register      create admin,log into game
-/admin/dungeon/:id      PATCH         Update        Edit dungeon
-/admin/dungeon/:id      Delete        Destroy       Remove Dungeon from DB
-/admin/user/:id         Delete        Destroy       Remove User from DB
+/user/logout            GET           Logout        logout of game
+/user/register          POST          Register      create user
+/user/:userid           Delete        Destroy       Remove User from DB
+/user/:userid/dungeons
