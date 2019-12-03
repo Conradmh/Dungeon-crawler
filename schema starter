@@ -1,0 +1,50 @@
+const userSchema = new Schema ({
+  user: String,
+  password: String,
+  email: String
+})
+
+const characterSchema = new Schema ({
+  // user: ref ObjectId
+  name: String,
+  classType: String,
+  health: Number,
+  physAtk: Number,
+  magAtk: Number,
+  level: Number
+})
+
+const monsterSchema = new Schema ({
+  name: String,
+  level: Number,
+  children: [square.Schema],
+  xp: Number
+})
+
+const squareSchema = new Schema ({
+  color: String,
+  value: Number,
+  damage: Number,
+  poison: Number
+})
+
+const dungeonSchema = new Schema ({
+  name: String,
+  difficulty: Number,
+  monArray: [Monster.schema],
+  boss: Monster.schema,
+  completed: Boolean
+
+})
+
+const gameSchema = new Schema ({
+  charArray: Array,
+  dungeon: [objectid ref dungeon],
+  dungeonProgress:[(current values of dungeon.Schema), (current values of character.Schema )]
+})
+
+
+build admin section of site with just express where dungeon masters can create dungeons with monsters with squares and save them so users can play that round (dungeon)
+
+
+Save superuser object id, replace with validateVar, and store in .env as an env var

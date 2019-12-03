@@ -1,0 +1,21 @@
+URL                     VERB         Action        Description
+/home                   GET          Index          Show main page
+/dungeon                GET          Index          Show main game page (show available dungeons)
+
+/dungeon/new            Get          New            Show create game form/modal/page
+/dungeon/:id            POST         Create         Create new game
+/dungeon/:id            GET          Show           Show current game page
+/dungeon/:id            PATCH        Update         Save instance of current dungeon
+/monster/new            Get          New            Show create monster list/form/modal
+/monster/:id            GET          Show           Show current monster 
+
+
+/user/login             POST          Login         log into game
+/user/logout            GET           Logout        logout of game, reload login
+/user/register          POST          Register      create user,log into game
+/admin/login            POST          Login         log into game
+/admin/logout           GET           Logout        logout of game, reload login
+/admin/register         POST          Register      create admin,log into game
+/admin/dungeon/:id      PATCH         Update        Edit dungeon
+/admin/dungeon/:id      Delete        Destroy       Remove Dungeon from DB
+/admin/user/:id         Delete        Destroy       Remove User from DB
