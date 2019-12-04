@@ -21,7 +21,8 @@ router.post('/', (req, res) => {
     name: req.body.name,
     level: req.body.level,
     children: req.body.children,
-    xp: req.body.xp
+    xp: req.body.xp,
+    boss: req.body.boss
   });
 
   newMonster.save().then(monster => res.json(monster))
