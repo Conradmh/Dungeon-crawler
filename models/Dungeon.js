@@ -4,8 +4,8 @@ const Schema = mongoose.Schema;
 
 const dungeonSchema = new Schema ({
   name: String,
-  difficulty: Number,
-  monArray: [Monster.schema],
+  difficulty: String,
+  monsters: [{type: Schema.Types.ObjectId, ref:'Monster'}],
   boss: Monster.schema,
   completed: Boolean
 })

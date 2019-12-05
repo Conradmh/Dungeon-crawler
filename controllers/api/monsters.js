@@ -1,10 +1,9 @@
 const express = require('express');
-const cors = require('cors');
 const router = express.Router();
 
 const Monster = require('../../models/Monster.js')
 
-router.use(cors());
+
 // @route GET api/monsters
 // desc Get All monsters
 // access Public

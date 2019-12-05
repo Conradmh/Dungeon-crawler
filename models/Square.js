@@ -6,7 +6,7 @@ const squareSchema = new Schema ({
   color: String,
   value: Number,
   damage: Number,
-  poison: Boolean
+  poison: Number
 })
 
 module.exports = Square = mongoose.model('Square', squareSchema)

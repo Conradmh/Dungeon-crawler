@@ -15,7 +15,8 @@ class CreateMonsterModal extends Component {
   handleChange = (e) =>{
     e.preventDefault();
     this.setState(
-      {[e.currentTarget.name]: e.currentTarget.value})
+      {[e.currentTarget.name]: e.currentTarget.value}
+    )
   };
   handleDropDown = (e, data) =>{
     this.setState({
@@ -42,12 +43,10 @@ class CreateMonsterModal extends Component {
       { key: '3', text: "3", value: "3" },
     ]
     const squares = this.props.squares
-    console.log(squares, 'this is squares');
     const squareOptions = squares.map((square) => {
       let sqr = {key: square._id, text: [square.color, square.value, square.damage, square.poison], value: square._id}
       return sqr
     })
-    console.log(squareOptions, 'this is squareOptions');
 
     return (
       <React.Fragment>
@@ -111,15 +110,13 @@ class CreateMonsterModal extends Component {
                     placeholder='Squares'
                     name="squares"
                     onChange={this.handleDropDown}
-
-                    value={this.state.squares}
                     fluid multiple selection
                     options={squareOptions}
                   />
                   <Select
                     placeholder='Select Monsters xp'
                     name="xp"
-
+                    onChange={this.handleDropDown}
                     options={options}
                   />
                   <Form.Button>Submit</Form.Button>
