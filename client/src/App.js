@@ -1,14 +1,21 @@
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { Component } from 'react';
 import './App.css';
+import GameContainer from './components/GameContainer/Index.js'
 
+class App extends Component {
+  constructor(){
+    super();
+    this.state = {
 
-function App() {
-  return (
-    <div className="App">
-      <h1> This is Dungeon Crawler </h1>
-    </div>
-  );
+    }
+  }
+  render(){
+    return (
+      <div className="App">
+      <GameContainer />
+      </div>
+    );
+  }
 }
 
 export default App;

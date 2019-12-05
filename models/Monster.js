@@ -5,10 +5,7 @@ const Schema = mongoose.Schema;
 const monsterSchema = new Schema ({
   name: String,
   level: Number,
-  squares: {
-    type: [Square.schema],
-    default: undefined
-  },
+  squares: [{ type: Schema.Types.ObjectId, ref: 'Square' }],
   xp: Number,
   boss: Boolean
 })

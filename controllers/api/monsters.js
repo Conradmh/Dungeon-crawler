@@ -1,8 +1,10 @@
 const express = require('express');
+const cors = require('cors');
 const router = express.Router();
 
 const Monster = require('../../models/Monster.js')
 
+router.use(cors());
 // @route GET api/monsters
 // desc Get All monsters
 // access Public
@@ -20,7 +22,7 @@ router.post('/', (req, res) => {
   const newMonster = new Monster({
     name: req.body.name,
     level: req.body.level,
-    children: req.body.children,
+    squares: req.body.squares,
     xp: req.body.xp,
     boss: req.body.boss
   });
