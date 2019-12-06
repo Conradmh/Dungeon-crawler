@@ -22,11 +22,7 @@ class CreateDungeonModal extends Component {
       [data.name]: data.value
     });
   };
-  toggleCompleted = (e) => {
-    this.setState({
-      completed: !this.state.completed
-    })
-  }
+
   render(){
     const options = [
       { key: 'easy', text: "Novice", value: "easy" },
@@ -72,28 +68,19 @@ class CreateDungeonModal extends Component {
                     placeholder='Dungeon Name'
                     onChange={this.handleChange}
                   />
-
-                  <Form.Checkbox
-                      key='completed'
-                      label='Completed'
-                      name='completed'
-                      checked={this.state.completed === true}
-                      onChange={this.toggleCompleted}
-                    />
-                    <Dropdown
-                      placeholder='Monsters'
-                      name="monsters"
-                      onChange={this.handleDropDown}
-                      fluid multiple selection
-                      options={monsterOptions}
-                    />
-                    <Select
-                      placeholder='Select Dungeon Difficulty'
-                      name="difficulty"
-                      onChange={this.handleDropDown}
-                      options={options}
-                    />
-
+                  <Dropdown
+                    placeholder='Monsters'
+                    name="monsters"
+                    onChange={this.handleDropDown}
+                    fluid multiple selection
+                    options={monsterOptions}
+                  />
+                  <Select
+                    placeholder='Select Dungeon Difficulty'
+                    name="difficulty"
+                    onChange={this.handleDropDown}
+                    options={options}
+                  />
                   <Form.Button>Submit</Form.Button>
               </Form>
         </Modal>

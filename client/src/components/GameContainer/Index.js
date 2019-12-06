@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import DungeonList from '../DungeonList/Index.js'
 import CreateMonsterModal from '../CreateMonsterModal/Index.js'
 import CreateDungeonModal from '../CreateDungeonModal/Index.js'
 
@@ -9,8 +10,10 @@ class GameContainer extends Component {
       squares: [],
       monsters:[],
       dungeons: [],
+      characters: [],
       createMonsterModalOpen: false,
-      createDungeonModalOpen: false
+      createDungeonModalOpen: false,
+      editDungeonModalOpen: false
 
     }
   }
@@ -18,6 +21,7 @@ class GameContainer extends Component {
     this.getSquares();
     this.getMonsters();
     this.getDungeons();
+    this.getCharacters();
   }
   getSquares = async () => {
 
@@ -60,6 +64,21 @@ class GameContainer extends Component {
 
       this.setState({
         dungeons: parsedDungeons
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  getCharacters = async () => {
+
+    try {
+      const characters = await
+      fetch(process.env.REACT_APP_API_URL + '/api/characters');
+
+      const parsedCharacters = await characters.json();
+
+      this.setState({
+        characters: parsedCharacters
       });
       console.log(this.state, 'this is state after mount');
     } catch (err) {
@@ -116,6 +135,50 @@ class GameContainer extends Component {
       console.log(err)
     }
   }
+  editDungeon = (idOfDungeonToEdit) => {
+    const dungeonToEdit = this.state.dungeons.find(dungeon => dungeon._id === idOfDungeonToEdit)
+      this.setState({
+        editDungeonModalOpen: true,
+        dungeonToEdit: {...dungeonToEdit}
+      });
+  }
+  updateDungeon = async (e) => {
+    e.preventDefault()
+
+    try {
+
+      const url = process.env.REACT_APP_API_URL + '/api/api/dungeons/' + this.state.dungeonToEdit._id;
+
+      const updateDungeon = await fetch(url, {
+        method: 'PUT',
+        body: JSON.stringify(this.state.dungeonToEdit),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      const updateDungeonParsed = await updateDungeon.json()
+
+      console.log(`response from DB after trying to do update on ${updateDungeonParsed}`);
+      console.log(updateDungeonParsed.data, "this is UDP.data");
+      const newDungeonArrayWithUpdate = this.state.dungeons.map((dungeon) => {
+        if(dungeon._id === updateDungeonParsed.data._id) {
+
+          dungeon = updateDungeonParsed.data
+        }
+        return dungeon
+      })
+
+      this.setState({
+        dungeons: newDungeonArrayWithUpdate
+      })
+
+      this.closeEditModal()
+
+    } catch(err) {
+      console.error(err)
+    }
+  }
+
   toggleCreateMonsterModal = (e) => {
     this.setState({
       createMonsterModalOpen: !this.state.createMonsterModalOpen
@@ -126,10 +189,20 @@ class GameContainer extends Component {
       createDungeonModalOpen: !this.state.createDungeonModalOpen
     })
   }
+  toggleEditDungeonModal = (e) => {
+    this.setState({
+      editDungeonModalOpen: !this.state.editDungeonModalOpen
+    })
+  }
   render(){
     return (
       <React.Fragment>
-
+        <DungeonList
+          dungeons={this.state.dungeons}
+          edit={this.editDungeon}
+          update={this.updateDungeon}
+          monsters={this.state.monsters}
+        />
         <CreateMonsterModal
           open={this.state.createMonsterModalOpen}
           toggle={this.toggleCreateMonsterModal}

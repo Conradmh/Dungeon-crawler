@@ -81,6 +81,7 @@ class CreateMonsterModal extends Component {
                       value="1"
                       checked={this.state.level === "1"}
                       onChange={this.handleRadioChange}
+                      // onClick={() => this.setState({level: 1})}
                     />
                     <Form.Radio
                       key='2'
