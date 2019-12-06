@@ -94,6 +94,7 @@ class DungeonList extends Component {
           update={this.props.update}
           monsters={this.props.monsters}
           render={this.renderDungeonSummary}
+          toggle={this.toggleDungeonModal}
         />
       </React.Fragment>
     )
