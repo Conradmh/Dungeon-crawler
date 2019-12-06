@@ -13,7 +13,7 @@ class GameContainer extends Component {
       characters: [],
       createMonsterModalOpen: false,
       createDungeonModalOpen: false,
-      editDungeonModalOpen: false
+
 
     }
   }
@@ -138,7 +138,7 @@ class GameContainer extends Component {
   editDungeon = (idOfDungeonToEdit) => {
     const dungeonToEdit = this.state.dungeons.find(dungeon => dungeon._id === idOfDungeonToEdit)
       this.setState({
-        editDungeonModalOpen: true,
+        dungeonModalOpen: true,
         dungeonToEdit: {...dungeonToEdit}
       });
   }
@@ -189,11 +189,11 @@ class GameContainer extends Component {
       createDungeonModalOpen: !this.state.createDungeonModalOpen
     })
   }
-  toggleEditDungeonModal = (e) => {
-    this.setState({
-      editDungeonModalOpen: !this.state.editDungeonModalOpen
-    })
-  }
+  // toggleEditDungeonModal = (e) => {
+  //   this.setState({
+  //     dungeonModalOpen: !this.state.dungeonModalOpen
+  //   })
+  // }
   render(){
     return (
       <React.Fragment>
@@ -202,6 +202,8 @@ class GameContainer extends Component {
           edit={this.editDungeon}
           update={this.updateDungeon}
           monsters={this.state.monsters}
+          
+
         />
         <CreateMonsterModal
           open={this.state.createMonsterModalOpen}

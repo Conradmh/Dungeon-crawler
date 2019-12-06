@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Card, Button } from 'semantic-ui-react';
+import DungeonModal from '../DungeonModal/Index.js'
 
 class DungeonList extends Component {
   constructor(props){
     super(props);
     this.state = {
+      dungeonModalOpen: false,
       currentDungeonIndex: undefined
     }
   }
@@ -31,8 +33,9 @@ class DungeonList extends Component {
             foundMonsters.map((monster) => {
               return (
                 <li key={monster._id}>
-                  {monster.name}{monster.level}{monster.xp}
-                  {monster.boss ? 'is a boss' : 'is a minion'}
+                  {monster.name}
+                  {monster.boss ? ': is a boss. ' : ': is a minion. '}
+                  {monster.level} {monster.xp}
                 </li>
               )
             })
@@ -44,14 +47,19 @@ class DungeonList extends Component {
         >Close</Button>
       </React.Fragment>
     );
-    // this.props.difficulty:"",
-    // completed: false
-  }
 
-  render(){
+  }
+  toggleDungeonModal = (e) => {
+    this.setState({
+      dungeonModalOpen: !this.state.dungeonModalOpen
+    })
+  }
+  render(props){
+
     const dungeons = this.props.dungeons.map((dungeon, idx) => {
 
       return (
+        <React.Fragment>
           <Card className="blue card" key={dungeon._id}>
             <Card.Content>
               <Card.Header>{dungeon.name}</Card.Header>
@@ -61,23 +69,35 @@ class DungeonList extends Component {
               <Button
                 className="ui blue basic button"
                 onClick={() => {
-                  console.log('butt', dungeon)
+                  console.log('modal button clicked', this.state.currentDungeonIndex);
+                  this.toggleDungeonModal()
                   this.setState({
-                  currentDungeonIndex: idx
-                })}
-              }>Edit Dungeon<
-              /Button>
+                    currentDungeonIndex: idx
+                  })
+                }
+              }>Edit Dungeon</Button>
             </Card.Content>
           </Card>
+        </React.Fragment>
+
       )
-    }
-  )
-  return (
-      <Card.Group>
-        { this.state.currentDungeonIndex !== undefined && this.renderDungeonSummary() }
-        { dungeons }
-      </Card.Group>
+    })
+    return (
+      <React.Fragment>
+        <Card.Group>
+          { dungeons }
+        </Card.Group>
+        <DungeonModal
+          open={this.state.dungeonModalOpen}
+          dungeons={this.props.dungeons}
+          edit={this.props.edit}
+          update={this.props.update}
+          monsters={this.props.monsters}
+          render={this.renderDungeonSummary}
+        />
+      </React.Fragment>
     )
+
   }
 }
 
