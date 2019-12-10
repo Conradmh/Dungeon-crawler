@@ -44,7 +44,14 @@ class DungeonModal extends Component {
                 })
               }
             </ul>
-
+            <Button
+            className="ui blue basic button"
+            onClick={() => {
+              this.setState({
+                dungeonShow: false
+              })
+            }}
+            >Edit</Button>
         </React.Fragment>
       );
 
@@ -99,8 +106,30 @@ class DungeonModal extends Component {
               />
               <Form.Button>Submit</Form.Button>
             </Form>
+            <Button
+            className="ui blue basic button"
+            onClick={() => {
+              this.setState({
+                dungeonShow: false
+              })
+              this.props.delete(this.props.dungeon._id)
+            }}
+            >Delete</Button>
             </React.Fragment>
         )
+  }
+  deleteDungeon = async (id) => {
+    console.log(id)
+
+    const deleteDungeonResponse = await fetch(process.env.REACT_APP_API_URL + '/api/dungeons/' + id, {
+        method: 'DELETE',
+        credentials: 'include'
+    });
+
+    const deleteDungeonParsed = await deleteDungeonResponse.json();
+    console.log(deleteDungeonParsed)
+
+    this.setState({dungeons: this.state.dungeons.filter((dungeon) => dungeon.id !== id )})
   }
 
   render(props){
@@ -114,14 +143,7 @@ class DungeonModal extends Component {
         {this.props.dungeon !== undefined && this.state.dungeonShow === true && this.showDungeonSummary() }
         {this.props.dungeon !== undefined && this.state.dungeonShow === false &&
         this.editDungeon() }
-        <Button
-        className="ui blue basic button"
-        onClick={() => {
-          this.setState({
-            dungeonShow: false
-          })
-        }}
-        >Edit</Button>
+
       </Modal>
 
     );

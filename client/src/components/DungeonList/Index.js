@@ -77,6 +77,7 @@ class DungeonList extends Component {
           dungeonsMonsters={this.state.monsterArray}
           monsters={this.props.monsters}
           toggle={this.toggleDungeonModal}
+          delete={this.props.delete}
         />
       </React.Fragment>
     )

@@ -23,7 +23,7 @@ class GameContainer extends Component {
     this.getDungeons();
     this.getCharacters();
   }
-  
+
   getSquares = async () => {
 
     try {
@@ -137,44 +137,19 @@ class GameContainer extends Component {
       console.log(err)
     }
   }
-  editDungeon = (idOfDungeonToEdit) => {
-    const dungeonToEdit = this.state.dungeons.find(dungeon => dungeon._id === idOfDungeonToEdit)
-      this.setState({
-        dungeonModalOpen: true,
-        dungeonToEdit: {...dungeonToEdit}
-      });
+  deleteDungeon = async (id) => {
+    console.log(id)
+
+    const deleteDungeonResponse = await fetch(process.env.REACT_APP_API_URL + '/api/dungeons/' + id, {
+        method: 'DELETE',
+        credentials: 'include'
+    });
+
+    const deleteDungeonParsed = await deleteDungeonResponse.json();
+    console.log(deleteDungeonParsed)
+
+    this.setState({dungeons: this.state.dungeons.filter((dungeon) => dungeon.id !== id )})
   }
-  updateDungeon = async (e) => {
-    e.preventDefault()
-    try {
-
-      const url = process.env.REACT_APP_API_URL + '/api/api/dungeons/' + this.state.dungeonToEdit._id;
-
-      const updateDungeon = await fetch(url, {
-        method: 'PUT',
-        body: JSON.stringify(this.state.dungeonToEdit),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      const updateDungeonParsed = await updateDungeon.json()
-
-      console.log(updateDungeonParsed.data, "this is UDP.data");
-      const newDungeonArrayWithUpdate = this.state.dungeons.map((dungeon) => {
-        if(dungeon._id === updateDungeonParsed.data._id) {
-          dungeon = updateDungeonParsed.data
-        }
-        return dungeon
-      })
-      this.setState({
-        dungeons: newDungeonArrayWithUpdate
-      })
-      this.closeEditModal()
-    } catch(err) {
-      console.error(err)
-    }
-  }
-
   toggleCreateMonsterModal = (e) => {
     this.setState({
       createMonsterModalOpen: !this.state.createMonsterModalOpen
@@ -191,10 +166,8 @@ class GameContainer extends Component {
       <React.Fragment>
         <DungeonList
           dungeons={this.state.dungeons}
-          edit={this.editDungeon}
-          update={this.updateDungeon}
           monsters={this.state.monsters}
-
+          delete={this.deleteDungeon}
 
         />
         <CreateMonsterModal
