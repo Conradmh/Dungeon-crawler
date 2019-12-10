@@ -9,6 +9,7 @@ class CreateDungeonModal extends Component {
       name: "",
       difficulty:"",
       monsters: [],
+      boss: undefined,
       completed: false
     }
   }
@@ -43,6 +44,20 @@ class CreateDungeonModal extends Component {
       }
       return mon
     })
+    const bosses = this.props.monsters.filter((monster) => monster.boss === true )
+    const bossOptions = bosses.map((monster) => {
+      let boss = {
+        key: monster._id,
+        text: [
+          "Lvl:",
+          monster.level,
+          " ",
+          monster.name
+        ],
+        value: monster._id
+      }
+      return boss
+    })
     return (
       <React.Fragment>
         <Icon
@@ -74,6 +89,12 @@ class CreateDungeonModal extends Component {
                     onChange={this.handleDropDown}
                     fluid multiple selection
                     options={monsterOptions}
+                  />
+                  <Select
+                    placeholder='Select Dungeon Boss'
+                    name="boss"
+                    onChange={this.handleDropDown}
+                    options={bossOptions}
                   />
                   <Select
                     placeholder='Select Dungeon Difficulty'

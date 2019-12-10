@@ -33,7 +33,6 @@ class DungeonModal extends Component {
             <ul>
               {
                 this.props.dungeonsMonsters.map((monster) => {
-                  console.log(monster, 'this is monster with props.dungeonsMonsters.map');
                   return (
                     <li key={monster._id}>
                       {monster.name}
@@ -109,27 +108,12 @@ class DungeonModal extends Component {
             <Button
             className="ui blue basic button"
             onClick={() => {
-              this.setState({
-                dungeonShow: false
-              })
+              this.props.toggle()
               this.props.delete(this.props.dungeon._id)
             }}
             >Delete</Button>
             </React.Fragment>
         )
-  }
-  deleteDungeon = async (id) => {
-    console.log(id)
-
-    const deleteDungeonResponse = await fetch(process.env.REACT_APP_API_URL + '/api/dungeons/' + id, {
-        method: 'DELETE',
-        credentials: 'include'
-    });
-
-    const deleteDungeonParsed = await deleteDungeonResponse.json();
-    console.log(deleteDungeonParsed)
-
-    this.setState({dungeons: this.state.dungeons.filter((dungeon) => dungeon.id !== id )})
   }
 
   render(props){

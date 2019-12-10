@@ -102,8 +102,7 @@ class GameContainer extends Component {
 
       const parsedResponse = await createdMonsterResponse.json();
 
-
-      this.setState({monsters: [...this.state.monsters, parsedResponse.data]})
+      this.setState({monsters: [...this.state.monsters, parsedResponse]})
       console.log(parsedResponse, 'this is the New Monster');
       this.toggleCreateMonsterModal()
 
@@ -128,9 +127,10 @@ class GameContainer extends Component {
       const parsedResponse = await createdDungeonResponse.json();
 
 
-      this.setState({dungeons: [...this.state.dungeons, parsedResponse.data]})
+      this.setState({dungeons: [...this.state.dungeons, parsedResponse]})
       console.log(parsedResponse, 'this is the New Dungeon');
       this.toggleCreateDungeonModal()
+
 
     } catch(err){
       console.log('error')
@@ -144,11 +144,12 @@ class GameContainer extends Component {
         method: 'DELETE',
         credentials: 'include'
     });
-
     const deleteDungeonParsed = await deleteDungeonResponse.json();
-    console.log(deleteDungeonParsed)
 
-    this.setState({dungeons: this.state.dungeons.filter((dungeon) => dungeon.id !== id )})
+    // if (deleteDungeonParsed.statuscode === 201) {
+      // this.setState({dungeons: this.state.dungeons.filter((dungeon) => dungeon.id !== id )})
+    // }
+    this.getDungeons()
   }
   toggleCreateMonsterModal = (e) => {
     this.setState({
