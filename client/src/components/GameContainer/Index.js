@@ -23,6 +23,7 @@ class GameContainer extends Component {
     this.getDungeons();
     this.getCharacters();
   }
+  
   getSquares = async () => {
 
     try {
@@ -46,10 +47,11 @@ class GameContainer extends Component {
       fetch(process.env.REACT_APP_API_URL + '/api/monsters');
 
       const parsedMonsters = await monsters.json();
-
+      console.log(parsedMonsters, 'parsedMonsters');
       this.setState({
         monsters: parsedMonsters
       });
+      console.log(this.state.monsters);
     } catch (err) {
       console.log(err);
     }
@@ -144,7 +146,6 @@ class GameContainer extends Component {
   }
   updateDungeon = async (e) => {
     e.preventDefault()
-
     try {
 
       const url = process.env.REACT_APP_API_URL + '/api/api/dungeons/' + this.state.dungeonToEdit._id;
@@ -158,22 +159,17 @@ class GameContainer extends Component {
       })
       const updateDungeonParsed = await updateDungeon.json()
 
-      console.log(`response from DB after trying to do update on ${updateDungeonParsed}`);
       console.log(updateDungeonParsed.data, "this is UDP.data");
       const newDungeonArrayWithUpdate = this.state.dungeons.map((dungeon) => {
         if(dungeon._id === updateDungeonParsed.data._id) {
-
           dungeon = updateDungeonParsed.data
         }
         return dungeon
       })
-
       this.setState({
         dungeons: newDungeonArrayWithUpdate
       })
-
       this.closeEditModal()
-
     } catch(err) {
       console.error(err)
     }
@@ -189,11 +185,7 @@ class GameContainer extends Component {
       createDungeonModalOpen: !this.state.createDungeonModalOpen
     })
   }
-  // toggleEditDungeonModal = (e) => {
-  //   this.setState({
-  //     dungeonModalOpen: !this.state.dungeonModalOpen
-  //   })
-  // }
+
   render(){
     return (
       <React.Fragment>
@@ -202,7 +194,7 @@ class GameContainer extends Component {
           edit={this.editDungeon}
           update={this.updateDungeon}
           monsters={this.state.monsters}
-          
+
 
         />
         <CreateMonsterModal

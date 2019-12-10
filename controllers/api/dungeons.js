@@ -28,6 +28,24 @@ router.post('/', (req, res) => {
   newDungeon.save().then(dungeon => res.json(dungeon))
 });
 
+// @route Update api/dungeons/:id
+// desc Update a dungeon
+// access Public
+router.put('/:id', (req, res) => {
+  console.log(req.params.id, "we made it");
+  Dungeon.findById(req.params.id)
+    .then((dungeon) => {
+      dungeon.name = req.body.name,
+      dungeon.difficulty = req.body.difficulty,
+      dungeon.monsters = req.body.monsters,
+      dungeon.boss = req.body.boss,
+      dungeon.completed = req.body.completed
+      dungeon.save()
+    })
+    .then(() => res.json({success: true}))
+    .catch(err => res.status(500).json({succes: false}))
+})
+
 // @route DELETE api/dungeons/:id
 // desc Delete a dungeon
 // access Public

@@ -7,47 +7,30 @@ class DungeonList extends Component {
     super(props);
     this.state = {
       dungeonModalOpen: false,
+      monsterArray: [],
       currentDungeonIndex: undefined
     }
   }
-  renderDungeonSummary = () => {
+  findDungeonMonsters = (idx) => {
     const monsters = this.props.monsters
-    const dungeon = this.props.dungeons[this.state.currentDungeonIndex];
-      console.log(dungeon, 'yolo');
-    const foundMonsters =
-      dungeon.monsters.map(monsterId => {
 
-        return monsters.find((monster) => {
+    const dungeon = this.props.dungeons[idx];
+    console.log(dungeon, 'this is dungeon after called in find dungeon');
+    const foundMonsters = dungeon.monsters.map(monsterId => {
+
+       return  monsters.find((monster) => {
             if (monsterId === monster._id) {
-              return true
+              return monster
             }
             return false;
-          })
-        }
+        })
+      }
     )
-    return (
-      <React.Fragment>
-        <h1>{dungeon.name}</h1>
-        <ul>
-          {
-            foundMonsters.map((monster) => {
-              return (
-                <li key={monster._id}>
-                  {monster.name}
-                  {monster.boss ? ': is a boss. ' : ': is a minion. '}
-                  {monster.level} {monster.xp}
-                </li>
-              )
-            })
-          }
-        </ul>
-        <Button
-          className="ui blue basic button"
-          onClick={() => this.setState({currentDungeonIndex: undefined})}
-        >Close</Button>
-      </React.Fragment>
-    );
+    this.setState({
+      monsterArray: foundMonsters
+    })
 
+    console.log(this.state, 'this is state in dungeon list');
   }
   toggleDungeonModal = (e) => {
     this.setState({
@@ -55,9 +38,8 @@ class DungeonList extends Component {
     })
   }
   render(props){
-
+    console.log(this.props.dungeons, 'this is props.dungeons');
     const dungeons = this.props.dungeons.map((dungeon, idx) => {
-
       return (
         <React.Fragment>
           <Card className="blue card" key={dungeon._id}>
@@ -69,13 +51,13 @@ class DungeonList extends Component {
               <Button
                 className="ui blue basic button"
                 onClick={() => {
-                  console.log('modal button clicked', this.state.currentDungeonIndex);
-                  this.toggleDungeonModal()
+                  this.findDungeonMonsters(idx)
                   this.setState({
                     currentDungeonIndex: idx
                   })
+                  this.toggleDungeonModal()
                 }
-              }>Edit Dungeon</Button>
+              }>Show Dungeon</Button>
             </Card.Content>
           </Card>
         </React.Fragment>
@@ -86,20 +68,18 @@ class DungeonList extends Component {
       <React.Fragment>
         <Card.Group>
           { dungeons }
+          { console.log(this.state.currentDungeonIndex, 'this is currentDungeonIndex')}
+
         </Card.Group>
         <DungeonModal
           open={this.state.dungeonModalOpen}
-          dungeons={this.props.dungeons}
-          edit={this.props.edit}
-          update={this.props.update}
+          dungeon={this.props.dungeons[this.state.currentDungeonIndex]}
+          dungeonsMonsters={this.state.monsterArray}
           monsters={this.props.monsters}
-          render={this.renderDungeonSummary}
           toggle={this.toggleDungeonModal}
         />
       </React.Fragment>
     )
-
   }
 }
-
 export default DungeonList
