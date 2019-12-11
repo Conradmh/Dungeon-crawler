@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+  import React, { Component } from 'react';
 import { Card, Button } from 'semantic-ui-react';
 import DungeonModal from '../DungeonModal/Index.js'
 
@@ -15,7 +15,6 @@ class DungeonList extends Component {
     const monsters = this.props.monsters
 
     const dungeon = this.props.dungeons[idx];
-    console.log(dungeon, 'this is dungeon after called in find dungeon');
     const foundMonsters = dungeon.monsters.map(monsterId => {
 
        return  monsters.find((monster) => {
@@ -30,7 +29,6 @@ class DungeonList extends Component {
       monsterArray: foundMonsters
     })
 
-    console.log(this.state, 'this is state in dungeon list');
   }
   toggleDungeonModal = (e) => {
     this.setState({
@@ -38,7 +36,6 @@ class DungeonList extends Component {
     })
   }
   render(props){
-    console.log(this.props.dungeons, 'this is props.dungeons');
     const dungeons = this.props.dungeons.map((dungeon, idx) => {
       return (
         <React.Fragment>
@@ -68,7 +65,6 @@ class DungeonList extends Component {
       <React.Fragment>
         <Card.Group>
           { dungeons }
-          { console.log(this.state.currentDungeonIndex, 'this is currentDungeonIndex')}
 
         </Card.Group>
         <DungeonModal
@@ -78,6 +74,7 @@ class DungeonList extends Component {
           monsters={this.props.monsters}
           toggle={this.toggleDungeonModal}
           delete={this.props.delete}
+          get={this.props.get}
         />
       </React.Fragment>
     )

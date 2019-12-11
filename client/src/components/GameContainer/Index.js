@@ -131,7 +131,6 @@ class GameContainer extends Component {
       console.log(parsedResponse, 'this is the New Dungeon');
       this.toggleCreateDungeonModal()
 
-
     } catch(err){
       console.log('error')
       console.log(err)
@@ -145,7 +144,7 @@ class GameContainer extends Component {
         credentials: 'include'
     });
     const deleteDungeonParsed = await deleteDungeonResponse.json();
-
+    console.log(deleteDungeonParsed);
     // if (deleteDungeonParsed.statuscode === 201) {
       // this.setState({dungeons: this.state.dungeons.filter((dungeon) => dungeon.id !== id )})
     // }
@@ -169,6 +168,7 @@ class GameContainer extends Component {
           dungeons={this.state.dungeons}
           monsters={this.state.monsters}
           delete={this.deleteDungeon}
+          get={this.getDungeons}
 
         />
         <CreateMonsterModal

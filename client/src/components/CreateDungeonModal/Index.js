@@ -26,9 +26,9 @@ class CreateDungeonModal extends Component {
 
   render(){
     const options = [
-      { key: 'easy', text: "Novice", value: "easy" },
-      { key: 'medium', text: "Adept", value: "medium" },
-      { key: 'hard', text: "Veteran", value: "hard" },
+      { key: 'easy', text: "Novice", value: "Easy" },
+      { key: 'medium', text: "Adept", value: "Medium" },
+      { key: 'hard', text: "Veteran", value: "Hard" },
     ];
     const monsters = this.props.monsters
     const monsterOptions = monsters.map((monster) => {
@@ -54,7 +54,7 @@ class CreateDungeonModal extends Component {
           " ",
           monster.name
         ],
-        value: monster._id
+        value: this.state.boss  
       }
       return boss
     })
@@ -76,7 +76,8 @@ class CreateDungeonModal extends Component {
           <Header>Create a Dungeon</Header>
 
               <Form onSubmit={(e) =>
-                this.props.create(e, this.state)}>
+                this.props.create(e, this.state)
+              }>
                   <Form.Input
                     fluid
                     name="name"

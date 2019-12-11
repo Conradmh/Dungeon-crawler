@@ -35,6 +35,7 @@ router.put('/:id', (req, res) => {
   console.log(req.params.id, "we made it");
   Dungeon.findById(req.params.id)
     .then((dungeon) => {
+      // get the boss based on id
       dungeon.name = req.body.name,
       dungeon.difficulty = req.body.difficulty,
       dungeon.monsters = req.body.monsters,
@@ -43,7 +44,7 @@ router.put('/:id', (req, res) => {
       dungeon.save()
     })
     .then(() => res.json({success: true}))
-    .catch(err => res.status(500).json({succes: false}))
+    .catch(err => res.status(500).json({success: false}))
 })
 
 // @route DELETE api/dungeons/:id
