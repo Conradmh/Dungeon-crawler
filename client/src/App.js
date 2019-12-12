@@ -7,13 +7,22 @@ class App extends Component {
   constructor(){
     super();
     this.state = {
-      isPlaying: false
+      activeDungeon: undefined,
+      isPlaying: true
     }
+  }
+  toggleIsPlaying = (obj) => {
+    this.setState({
+      activeDungeon: obj,
+      isPlaying: !this.state.isPlaying
+    })
   }
   render(){
     return (
       <div className="App">
-      {this.state.isPlaying === true ? <GameContainer /> : <GameBoard />}
+      {this.state.isPlaying === true
+       ? <GameContainer play={this.toggleIsPlaying}/>
+       : <GameBoard activeDungeon={this.state.activeDungeon} play={this.toggleIsPlaying}/>}
 
       </div>
     );

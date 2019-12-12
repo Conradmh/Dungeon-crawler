@@ -12,7 +12,7 @@ const updateDungeon = async (dungeonId, newInfo) => {
     })
     const responseParsed = await serverResponse.json()
 
-    console.log(responseParsed.data, "this is UDP.data");
+    console.log(responseParsed, "this is UDP.data");
 
     return responseParsed
   } catch(err) {

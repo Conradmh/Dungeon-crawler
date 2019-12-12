@@ -15,9 +15,14 @@ class GameContainer extends Component {
       createDungeonModalOpen: false,
 
 
+
     }
   }
   componentDidMount(){
+    this.getAllData();
+  }
+
+  getAllData = () => {
     this.getSquares();
     this.getMonsters();
     this.getDungeons();
@@ -150,17 +155,19 @@ class GameContainer extends Component {
     // }
     this.getDungeons()
   }
-  toggleCreateMonsterModal = (e) => {
+  toggleCreateMonsterModal = () => {
     this.setState({
       createMonsterModalOpen: !this.state.createMonsterModalOpen
     })
   }
-  toggleCreateDungeonModal = (e) => {
+  toggleCreateDungeonModal = () => {
     this.setState({
       createDungeonModalOpen: !this.state.createDungeonModalOpen
     })
   }
-
+  refresh = () =>  {
+    this.getAllData();
+  }
   render(){
     return (
       <React.Fragment>
@@ -169,6 +176,8 @@ class GameContainer extends Component {
           monsters={this.state.monsters}
           delete={this.deleteDungeon}
           get={this.getDungeons}
+          play={this.props.play}
+          refresh={this.refresh}
 
         />
         <CreateMonsterModal

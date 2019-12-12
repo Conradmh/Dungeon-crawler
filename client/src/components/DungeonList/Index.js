@@ -30,35 +30,33 @@ class DungeonList extends Component {
     })
 
   }
-  toggleDungeonModal = (e) => {
+  toggleDungeonModal = () => {
     this.setState({
       dungeonModalOpen: !this.state.dungeonModalOpen
     })
   }
+
   render(props){
     const dungeons = this.props.dungeons.map((dungeon, idx) => {
       return (
-        <React.Fragment>
-          <Card className="blue card" key={dungeon._id}>
-            <Card.Content>
-              <Card.Header>{dungeon.name}</Card.Header>
-              <Card.Description>{dungeon.difficulty}</Card.Description>
-            </Card.Content>
-            <Card.Content>
-              <Button
-                className="ui blue basic button"
-                onClick={() => {
-                  this.findDungeonMonsters(idx)
-                  this.setState({
-                    currentDungeonIndex: idx
-                  })
-                  this.toggleDungeonModal()
-                }
-              }>Show Dungeon</Button>
-            </Card.Content>
-          </Card>
-        </React.Fragment>
-
+        <Card className="blue card" key={dungeon._id}>
+          <Card.Content>
+            <Card.Header>{dungeon.name}</Card.Header>
+            <Card.Description>{dungeon.difficulty}</Card.Description>
+          </Card.Content>
+          <Card.Content>
+            <Button
+              className="ui blue basic button"
+              onClick={() => {
+                this.findDungeonMonsters(idx)
+                this.setState({
+                  currentDungeonIndex: idx
+                })
+                this.toggleDungeonModal()
+              }
+            }>Show Dungeon</Button>
+          </Card.Content>
+        </Card>
       )
     })
     return (
@@ -72,9 +70,11 @@ class DungeonList extends Component {
           dungeon={this.props.dungeons[this.state.currentDungeonIndex]}
           dungeonsMonsters={this.state.monsterArray}
           monsters={this.props.monsters}
-          toggle={this.toggleDungeonModal}
+          toggleModal={this.toggleDungeonModal}
+          play={this.props.play}
           delete={this.props.delete}
           get={this.props.get}
+          refresh={this.props.refresh}
         />
       </React.Fragment>
     )

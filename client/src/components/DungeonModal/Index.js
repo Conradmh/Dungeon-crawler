@@ -21,20 +21,24 @@ class DungeonModal extends Component {
       {[e.currentTarget.name]: e.currentTarget.value}
     )
   }
-  handleDropDown = (e, data) =>{
-    console.log(data, 'this is data');
-    const boss = this.props.monsters.find((monster) => monster._id === data.value)
-    console.log(boss, 'this is boss');
-    this.setState({
-      boss: boss
-    });
-  };
-  showDungeonSummary = () => {
+  onMonstersSelectionChange = (e, data) => {
+    this.setState({monsters: data.value})
+  }
+  onBossChange = (e, data) =>{
+    this.findDungeonBoss(data.value)
 
+  };
+  onDifficultyChange = (e, data) => {
+
+    this.setState({difficulty: data.value})
+
+  }
+  showDungeonSummary = () => {
       return (
         <React.Fragment>
           <h1>{this.props.dungeon.name}</h1>
           <h2>{`Difficulty: ${this.props.dungeon.difficulty}`} </h2>
+          <h3>{`Boss: ${this.props.dungeon.boss.name}`}  </h3>
           <Checkbox
           label='Completion'
           checked={this.state.completed === true}
@@ -54,6 +58,12 @@ class DungeonModal extends Component {
               }
             </ul>
             <Button
+            className="ui pink basic button"
+            onClick={() => {
+              this.props.play(this.props.dungeon)
+            }}
+            >Play</Button>
+            <Button
             className="ui blue basic button"
             onClick={() => {
               this.setState({
@@ -66,7 +76,8 @@ class DungeonModal extends Component {
 
   }
   editDungeon = () => {
-    const monsterOptions = this.props.monsters.map((monster) => {
+    const nonBossMonsters = this.props.monsters.filter((monster) => monster.boss === false)
+    const monsterOptions = nonBossMonsters.map((monster) => {
       let mon = {
         key: monster._id,
         text: [
@@ -98,15 +109,17 @@ class DungeonModal extends Component {
     ];
         return(
           <React.Fragment>
-            <Form onSubmit={() => {
+            <Form onSubmit={async () => {
+              let curBoss = this.findBoss(this.state.boss)
               this.setState({
-                boss: this.findBoss(this.state.boss)
+                boss: curBoss
               })
-              updateDungeon(this.props.dungeon._id, this.state)
+              console.log(this.state, 'this is state before upd dungeon')
+              await updateDungeon(this.props.dungeon._id, this.state);
               this.setState({
                 dungeonShow: true
               })
-              this.props.get()
+              this.props.refresh()
             }}>
               <Form.Input
                 fluid
@@ -117,20 +130,20 @@ class DungeonModal extends Component {
               <Dropdown
                 placeholder="Choose monster(s)"
                 name="monsters"
-                onChange={this.handleDropDown}
+                onChange={this.onMonstersSelectionChange}
                 fluid multiple selection
                 options={monsterOptions}
               />
               <Select
-                placeholder="Choose a boss"
+                placeholder="Select Boss"
                 name="boss"
-                onChange={this.handleDropDown}
+                onChange={this.onBossChange}
                 options={bossOptions}
               />
               <Select
               placeholder={this.state.difficulty}
               name="difficulty"
-              onChange={this.handleDropDown}
+              onChange={this.onDifficultyChange}
               options={options}
               />
               <Form.Button>Submit</Form.Button>
@@ -145,23 +158,12 @@ class DungeonModal extends Component {
             </React.Fragment>
         )
   }
-  findDungeonBoss = (Id) => {
+  findDungeonBoss = (id) => {
     const monsters = this.props.monsters
-    const bosses = monsters.filter((monster) => monster.boss === true )
-
-    const dungeon = this.props.dungeon;
-    const foundBoss = bosses.filter((monster, monsterId) => {
-      if (monster._id === monsterId) {
-        return monster
-      }
-      return false;
-       // return  monsters.find((monster) => {
-       //      if (monsterId === monster._id) {
-       //        return monster
-       //      }
-       //      return false;+
-    })
-
+    const bosses = monsters.filter(monster => monster.boss === true )
+    console.log(bosses, 'these are the possible bosses');
+    const foundBoss = bosses.find(monster => monster._id === id)
+    console.log(foundBoss, 'this is foundBoss');
     this.setState({
       boss: foundBoss
     })
@@ -169,12 +171,20 @@ class DungeonModal extends Component {
   findBoss = (id) => {
     return this.props.monsters.filter((monster) => monster._id === id)
   }
+  toggleDungeonAndModal = () => {
+    this.setState({
+      dungeonShow: !this.state.dungeonShow
+    })
+    this.props.toggleModal()
+  }
+
   render(props){
+    console.log(this.state, 'this is state in render modal');
     return (
       <Modal
         open={this.props.open}
         closeIcon
-        onClose={this.props.toggle}>
+        onClose={this.toggleDungeonAndModal}>
 
         {this.props.dungeon !== undefined && this.state.dungeonShow === true && this.showDungeonSummary() }
         {this.props.dungeon !== undefined && this.state.dungeonShow === false &&
