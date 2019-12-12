@@ -151,7 +151,7 @@ class DungeonModal extends Component {
             <Button
             className="ui blue basic button"
             onClick={() => {
-              this.props.toggle()
+              this.props.toggleModal()
               this.props.delete(this.props.dungeon._id)
             }}
             >Delete</Button>

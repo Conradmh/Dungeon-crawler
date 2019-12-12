@@ -23,6 +23,12 @@ class CreateDungeonModal extends Component {
       [data.name]: data.value
     });
   };
+  handleBossDropDown = (e, data) =>{
+    this.setState({
+      boss: data
+      });
+  };
+
 
   render(){
     const options = [
@@ -54,7 +60,7 @@ class CreateDungeonModal extends Component {
           " ",
           monster.name
         ],
-        value: this.state.boss  
+        value: this.state.boss
       }
       return boss
     })
@@ -94,7 +100,7 @@ class CreateDungeonModal extends Component {
                   <Select
                     placeholder='Select Dungeon Boss'
                     name="boss"
-                    onChange={this.handleDropDown}
+                    onChange={this.handleBossDropDown}
                     options={bossOptions}
                   />
                   <Select
