@@ -2,65 +2,36 @@ import React, { Component } from 'react';
 import { Card, Grid, Container, Button } from 'semantic-ui-react';
 
 class GameBoard extends Component {
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = {
-      cards: [
-        {
-        name:"Wie Gehts",
-        value:0
-      },
-      {
-        name:"Hi",
-        value:1
-      },
-      {
-        name:"Hello",
-        value:2
-      },
-      {
-        name:"Guten Tag",
-        value:3
-      }],
-      monster: {
-        name: 'Goblin',
-        health: 4,
-        catchPhrase: 'My milkshake brings all the boys to the yard!!'
-      },
-      deck:[
-        {
-        name:"Lizzo",
-        value:0
-      },
-      {
-        name:"Hi",
-        value:1
-      },
-      {
-        name:"Hello",
-        value:2
-      },
-      {
-        name:"Guten Tag",
-        value:3
-      }
-    ],
+      doors: [],
+      monster: undefined,
+      monsters:[],
+      deck:[],
       player:{
         name: 'Johanna',
         skill: 'Blinding Enemies'
       }
     }
   }
+
   componentDidMount(){
-        this.populateCards()
+    console.log("am i running?");
+        this.populateDoors()
+
   }
-  populateCards = () => {
-    const cardsArr = this.props.activeDungeon.monsters
+  populateDoors = () => {
     this.setState({
-      cards: cardsArr
-    });
-  };
+      doors: this.props.activeDungeonsMonsters
+    })
+  }
   showDoors = () => {
+    console.log(this.state.doors, 'this is state.doors');
+    console.log(this.props.activeDungeonsMonsters, 'this is acctive dungeonsMonsters  as props ');
+
+    if(this.state.doors.length === 0) return null;
+
     return(
         <Grid  columns={4} divided>
           <React.Fragment>
@@ -69,32 +40,32 @@ class GameBoard extends Component {
               <Grid.Column>
                 <Card className="blue card" key='0'>
                   <Card.Content>
-                    <Card.Header>{this.state.cards[0].name}</Card.Header>
-                    <Card.Description>{this.state.cards[0].value}</Card.Description>
+                    <Card.Header>{this.state.doors[0].name}</Card.Header>
+                    <Card.Description>{this.state.doors[0].value}</Card.Description>
                   </Card.Content>
                 </Card>
               </Grid.Column>
               <Grid.Column>
                 <Card className="green card" key='1'>
                   <Card.Content>
-                    <Card.Header>{this.state.cards[1].name}</Card.Header>
-                    <Card.Description>{this.state.cards[1].value}</Card.Description>
+                    <Card.Header>{this.state.doors[1].name}</Card.Header>
+                    <Card.Description>{this.state.doors[1].value}</Card.Description>
                   </Card.Content>
                 </Card>
               </Grid.Column>
               <Grid.Column>
                 <Card className="orange card" key='2'>
                   <Card.Content>
-                    <Card.Header>{this.state.cards[2].name}</Card.Header>
-                    <Card.Description>{this.state.cards[2].value}</Card.Description>
+                    <Card.Header>{this.state.doors[2].name}</Card.Header>
+                    <Card.Description>{this.state.doors[2].value}</Card.Description>
                   </Card.Content>
                 </Card>
               </Grid.Column>
               <Grid.Column>
                 <Card className="yellow card" key='3'>
                   <Card.Content>
-                    <Card.Header>{this.state.cards[3].name}</Card.Header>
-                    <Card.Description>{this.state.cards[3].value}</Card.Description>
+                    <Card.Header>{this.state.doors[3].name}</Card.Header>
+                    <Card.Description>{this.state.doors[3].value}</Card.Description>
                   </Card.Content>
                 </Card>
               </Grid.Column>
@@ -104,6 +75,8 @@ class GameBoard extends Component {
     )
   }
   showDeck = () => {
+    if(this.state.deck.length === 0) return null;
+
     return (
       <React.Fragment>
         <h1> This is our Dungeon Deck: </h1>
@@ -117,6 +90,8 @@ class GameBoard extends Component {
     )
   }
   showCurrentMonster = () => {
+    if(this.state.monster === undefined) return null;
+
     return (
       <React.Fragment>
         <h1> This is our Opponent: </h1>
@@ -143,7 +118,7 @@ class GameBoard extends Component {
     )
   }
   showGame = () => {
-    if (this.state.cards !== []) {
+    if (this.state.doors !== []) {
       return(
         <Grid columns={7}>
           <Grid.Row>
@@ -185,7 +160,7 @@ class GameBoard extends Component {
   };
   render(){
     console.log(this.props.activeDungeon, 'this is activeDungeon');
-
+    console.log(this.state.monsters, "this is monsters in state");
 
     return (
       <Container>

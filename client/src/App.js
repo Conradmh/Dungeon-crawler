@@ -11,9 +11,11 @@ class App extends Component {
       isPlaying: true
     }
   }
-  toggleIsPlaying = (obj) => {
+  toggleIsPlaying = (dung, mons) => {
+
     this.setState({
-      activeDungeon: obj,
+      activeDungeonsMonsters: mons,
+      activeDungeon: dung,
       isPlaying: !this.state.isPlaying
     })
   }
@@ -22,7 +24,10 @@ class App extends Component {
       <div className="App">
       {this.state.isPlaying === true
        ? <GameContainer play={this.toggleIsPlaying}/>
-       : <GameBoard activeDungeon={this.state.activeDungeon} play={this.toggleIsPlaying}/>}
+       : <GameBoard
+        activeDungeon={this.state.activeDungeon}
+        activeDungeonsMonsters={this.state.activeDungeonsMonsters}
+        play={this.toggleIsPlaying}/>}
 
       </div>
     );

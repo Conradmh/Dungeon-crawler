@@ -60,7 +60,7 @@ class DungeonModal extends Component {
             <Button
             className="ui pink basic button"
             onClick={() => {
-              this.props.play(this.props.dungeon)
+              this.props.play(this.props.dungeon, this.props.dungeonsMonsters)
             }}
             >Play</Button>
             <Button
@@ -173,7 +173,7 @@ class DungeonModal extends Component {
   }
   toggleDungeonAndModal = () => {
     this.setState({
-      dungeonShow: !this.state.dungeonShow
+      dungeonShow: true
     })
     this.props.toggleModal()
   }
